@@ -7,6 +7,7 @@ load_dotenv()
 def run(playwright: Playwright) -> None:
     browser = playwright.firefox.launch(headless=False)
     context = browser.new_context()
+    times = 0
     try:
         while True:
             page = context.new_page()
@@ -44,6 +45,8 @@ def run(playwright: Playwright) -> None:
             # ).click()
             expect(page.get_by_text("THANK YOU FOR YOUR DONATION!")).to_be_visible(timeout=15_000)
             page.close()
+            times += 1
+            print("# of Donations:", times)
     except KeyboardInterrupt:
         pass
 
